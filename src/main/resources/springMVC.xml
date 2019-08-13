@@ -1,0 +1,75 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation=" http://www.springframework.org/schema/beans
+                            http://www.springframework.org/schema/beans/spring-beans.xsd
+                            http://www.springframework.org/schema/mvc
+                            http://www.springframework.org/schema/mvc/spring-mvc.xsd
+                            http://www.springframework.org/schema/context
+                            http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!-- 扫描controller中的组件 -->
+    <context:component-scan base-package="FHQ.controller" />
+
+    <!-- mvc注解驱动器 -->
+    <!-- 配置处理映射器 处理适配器 异常处理器 -->
+    <!--DefaultAnnotationHandlerMapping -> RequestMappingHandlerMapping-->
+    <!--AnnotationMethodHandlerAdapter -> RequestMappingHandlerAdapter-->
+    <!--AnnotationMethodHandlerExceptionResolver -> ExceptionHandlerExceptionResolver-->
+    <mvc:annotation-driven validator="validator"/>
+
+    <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+        <property name="providerClass" value="org.hibernate.validator.HibernateValidator"/>
+    </bean>
+
+    <!-- 静态资源配置 -->
+    <mvc:resources mapping="/css/**" location="/css/"/>
+    <mvc:resources mapping="/img/**" location="/img/"/>
+    <mvc:resources mapping="/js/**" location="/js/"/>
+    <mvc:resources mapping="/editormd/**" location="/editormd/"/>
+    <mvc:resources mapping="/fonts/**" location="/fonts/"/>
+    <mvc:resources mapping="/images/**" location="/images/"/>
+    <mvc:resources mapping="/plugins/**" location="/plugins/"/>
+    <mvc:resources mapping="*.html" location="/template/"/>
+    <mvc:resources mapping="/less/**" location="/less/"/>
+    <mvc:resources mapping="/scss/**" location="/scss/"/>
+    <mvc:resources mapping="/cssold/**" location="/cssold/"/>
+    <!-- 配置首页 -->
+    <!--<mvc:view-controller path="/" view-name="index"/>-->
+
+    <!-- 配置文件上传 -->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <!-- 6MB -->
+        <property name="maxUploadSize" value="#{1024*1024*6}"/>
+        <!-- UTF-8的编码方式 -->
+        <property name="defaultEncoding" value="UTF-8"/>
+        <!--  临时图片存放的文件夹 -->
+        <property name="uploadTempDir" value="temp"/>
+    </bean>
+
+    <!-- 配置Thymeleaf 视图解析器 -->
+    <bean id="viewResovler" class="org.thymeleaf.spring4.view.ThymeleafViewResolver">
+        <property name="templateEngine" ref="templateEngine"/>
+        <property name="characterEncoding" value="UTF-8" />
+    </bean>
+
+    <!-- 配置模板引擎 -->
+    <bean id="templateEngine" class="org.thymeleaf.spring4.SpringTemplateEngine">
+        <property name="templateResolvers">
+            <set>
+                <ref bean="templateResolver"/>
+            </set>
+        </property>
+    </bean>
+
+    <!-- 配置模板解析器 -->
+    <bean id="templateResolver" class="org.thymeleaf.spring4.templateresolver.SpringResourceTemplateResolver">
+        <property name="prefix" value="/template/"/>
+        <property name="suffix" value=".html"/>
+        <property name="templateMode" value="HTML"/>
+        <property name="cacheable" value="false"/>
+        <property name="characterEncoding" value="UTF-8"/>
+    </bean>
+
+</beans>

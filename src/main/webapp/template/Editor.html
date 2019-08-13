@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>创作中心</title>
+    <link href="../css/editormd.min.css" th:href="@{/css/editormd.min.css}" rel="stylesheet"/>
+    <link rel="shortcut icon" href="img/favicon.png" th:href="@{/img/favicon.png}">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,700" rel="stylesheet">
+    <link href="css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link href="css/jquery.bxslider.css" th:href="@{/css/jquery.bxslider.css}" rel="stylesheet">
+    <link href="css/style.css" th:href="@{/css/style.css}" rel="stylesheet">
+    <link href="css/buttons.css" th:href="@{css/buttons.css}" rel="stylesheet"/>
+</head>
+<body>
+<nav th:replace="common/blog :: top"></nav>
+<form action="/article" method="post" enctype="multipart/form-data">
+    <div class="col-md-12" style="margin-bottom: 20px">
+        <div class="col-md-offset-2 col-md-4">
+            <div class="input-group" style="height: 50px;width: 100%">
+                <span class="input-group-addon" id="basic-addon2" style="font-size: 25px">文章标题</span>
+                <input type="text" class="form-control" style="height: 50px"  aria-describedby="basic-addon2">
+            </div>
+        </div>
+        <div class="col-md-offset-1 col-md-2" style="padding-left: 0px;border: red  1px">
+            <button type="button" class="button button-rounded"><b>保存到草稿箱</b></button>
+        </div>
+        <div class="col-md-2" style="padding-left: 0px;border: red  1px">
+            <button type="button" class="button button-rounded"><b>发布</b></button>
+        </div>
+    </div>
+    <div>
+
+    </div>
+    <div class="editormd"  id="test-editormd">
+        <textarea class="editormd-markdown-textarea" name="test-editormd-markdown-doc"></textarea>
+        <!-- 第二个隐藏文本域，用来构造生成的HTML代码，方便表单POST提交，这里的name可以任意取，后台接受时以这个name键为准 -->
+        <textarea class="editormd-html-textarea" name="text"></textarea>
+    </div>
+
+</form>
+    <script src="js/jquery.slicknav.min.js" th:src="@{/js/jquery.slicknav.min.js}"></script>
+    <script src="js/jquery.bxslider.min.js"th:src="@{/js/jquery.bxslider.min.js}"></script>
+    <script src="js/script.js" th:href="@{/js/script.js}"></script>
+    <script src="/js/jquery-3.1.1.min.js" th:src="@{/js/jquery-3.1.1.min.js}"></script>
+    <script src="/js/editormd.min.js" th:src="@{/js/editormd.min.js}"></script>
+    <script src="/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
+    <script src="/editormd/lib/marked.min.js" th:src="@{/editormd/lib/marked.min.js}"></script>
+    <script src="/editormd/lib/prettify.min.js" th:src="@{/editormd/lib/prettify.min.js}"></script>
+    <script src="/plugins/image-dialog/image-dialog.js" th:src="@{/plugins/image-dialog/image-dialog.js}"></script>
+
+
+    <script type="text/javascript">
+        $(function() {
+            editormd("test-editormd", {
+                width   : 1400,
+                height  : 900,
+                syncScrolling : "single",
+                //lib目录
+                path    : "/editormd/lib/",
+                //这个配置在simple.html中并没有，但是为了能够提交表单，使用这个配置可以让构造出来的HTML代码直接在第二个隐藏的textarea域中，方便post提交表单。
+                saveHTMLToTextarea : true,
+                previewTheme : "light",
+                imageUpload : true,
+                emoji: true,
+                tex: true,
+                searchReplace: true,
+                imageFormats : ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
+                imageUploadURL : "/upload"
+
+            });
+        });
+        //editor.md期望得到一个json格式的上传后的返回值，格式是这样的：
+        /*
+        {
+            success : 0 | 1,           // 0 表示上传失败，1 表示上传成功
+            message : "提示的信息，上传成功或上传失败及错误信息等。",
+            url     : "图片地址"        // 上传成功时才返回
+        }
+        */
+    </script>
+</body>
+</html>
