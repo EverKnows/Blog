@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Home</title>
+
+    <link href="/css/style.css" th:href="@{/css/style.css}" rel="stylesheet">
+    <!-- Bootstrap core CSS -->
+    <link href="asserts/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="asserts/css/dashboard.css" th:href="@{/css/dashboard.css}" rel="stylesheet">
+    <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css" th:href="@{/css/font-awesome.min.css}">
+    <link rel="stylesheet" th:href="@{/css/buttons.css}" href="/css/buttons.css">
+    <script src="/js/jquery-3.1.1.min.js" th:src="@{/js/jquery-3.1.1.min.js}"></script>
+    <script src="/js/jquery.slicknav.min.js" th:src="@{/js/jquery.slicknav.min.js}"></script>
+    <script src="/js/jquery.bxslider.min.js" th:src="@{/js/jquery.bxslider.min.js}"></script>
+    <script src="/js/script.js" th:href="@{/js/script.js}"></script>
+    <script src="/js/bootstrap.min.js" th:href="@{/js/bootstrap.min.js}"></script>
+    <script src="/js/jquery.slicknav.min.js" th:src="@{/js/jquery.slicknav.min.js}"></script>
+
+</head>
+
+<body>
+<!--引入topbar-->
+<div th:replace="/common/bar :: topbar"></div>
+<div class="container-fluid">
+    <div class="row">
+        <!--引入sidebar-->
+        <div th:replace="/common/bar :: sidebar(activeOption='search')"></div>
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+                <h1 class="h2"><i class="fa fa-search fa-lg" aria-hidden="true"></i>&nbsp;&nbsp;用户搜索</h1>
+            </div>
+            <form th:action="@{/home/searchs}" method="get">
+                <div class="row">
+                    <div class="offset-2 col-md-8" style="border-bottom: gainsboro solid 1px;height: 60px">
+                        <div class="input-group">
+                            <input type="hidden" name="cur" value="1"/>
+                            <input type="hidden" name="size" value="5">
+                            <input name="username" th:value="${username}" type="text" class="form-control" placeholder="Search for...">
+                            <span class="input-group-btn">
+                                <input name="search" class="button button-border" type="submit" value="Search!"/>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <div class="row" th:if="${users != null}" th:each="user:${users}" style="height: 80px;margin-top: 20px">
+                <div class="offset-1 col-md-1" >
+                    <img src="/img/img1.jpg" th:src="@{${user.avatar}}" style="height: 80px;width: 80px" class="img-thumbnail">
+                </div>
+                <div class="col-md-3" style="margin-top: 15px;height: 50px;border-bottom: solid 1px black;border-top: solid 1px black">
+                    <div style="height: 50px;text-align: center">
+                        <i class="fa fa-user-o fa-2x" aria-hidden="true"></i><c style="font-size: 30px">&nbsp;[[${user.username}]]</c>
+                    </div>
+                </div>
+                <div class="col-md-3" style="margin-top: 15px;height: 50px;border-bottom: solid 1px black;border-top: solid 1px black">
+                    <div style="height: 50px;text-align: center">
+                        <i class="fa fa-envelope-o fa-2x" aria-hidden="true"></i><c style="font-size: 30px">&nbsp;[[${user.email}]]</c>
+                    </div>
+                </div>
+                <div class=" col-md-2">
+                    <div class="btn-group mr-2" style="margin-left: 20px;margin-top: 20px">
+                        <a> <button class="btn btn-sm btn-outline-secondary" style="height: 40px;width: 75px">进入主页</button></a>
+                        <a><button class="btn btn-sm btn-outline-secondary" style="height: 40px;width: 75px">关&nbsp;&nbsp;注</button></a>
+                    </div>
+                </div>
+            </div>
+            <nav class="blog-pagination" th:if="${curPage != null}">
+                <ul class="blog-pagination__items">
+                    <li th:each="page : ${#numbers.sequence(1, totalPage)}" class="blog-pagination__item  blog-pagination__item--active"
+                    th:class="${curPage == page}?'blog-pagination_'+'_item blog-pagination_'+'_item--active':'blog-pagination__item'"
+                    >
+                        <a href="#" th:href="@{'/home/searchs?'+'cur='+${page}+'&size=5'+'&username='+${username}}">[[${page}]]</a>
+                    </li>
+                    <li class="blog-pagination__item">
+                        <a href="#" th:href="@{'/home/searchs?'+'cur='+${curPage+1}+'&size=5'+'&username='+${username}}">Next Page</a>
+                    </li>
+                </ul>
+            </nav>
+
+
+        </main>
+    </div>
+</div>
+</body>
+
+</html>

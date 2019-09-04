@@ -1,6 +1,7 @@
 package FHQ.controller;
 
 import FHQ.Utils.MD5Utils;
+import FHQ.Validation.LoginValidate;
 import FHQ.po.User;
 import FHQ.service.Impl.UserServiceImpl;
 import FHQ.service.LoginCheckService;
@@ -53,7 +54,7 @@ public class LoginController {
 
     @PostMapping("/regist")
     @ResponseBody
-    public Map resigt(@Validated User user, BindingResult bindingResult) throws Exception {
+    public Map resigt(@Validated(LoginValidate.class) User user, BindingResult bindingResult) throws Exception {
         Map<String, Object> map = new HashMap<String, Object>();
 
         // 如果校验时有不符合校验规则的情况出现，springMVC会将错误信息放在BindingResult对象的错误提示信息里面

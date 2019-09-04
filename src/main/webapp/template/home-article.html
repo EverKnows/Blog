@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Home</title>
+    <link href="/css/style.css" th:href="@{/css/style.css}" rel="stylesheet">
+    <link href="asserts/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link href="asserts/css/dashboard.css" th:href="@{/css/dashboard.css}" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/buttons.css}" href="/css/buttons.css">
+    <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css" th:href="@{/css/font-awesome.min.css}">
+    <script src="js/jquery-3.1.1.min.js" th:src="@{/js/jquery-3.1.1.min.js}"></script>
+    <script src="js/jquery.slicknav.min.js" th:src="@{/js/jquery.slicknav.min.js}"></script>
+    <script src="js/jquery.bxslider.min.js"th:src="@{/js/jquery.bxslider.min.js}"></script>
+    <script src="js/script.js" th:href="@{/js/script.js}"></script>
+    <script src="js/bootstrap.min.js" th:href="@{/js/bootstrap.min.js}"></script>
+</head>
+
+<body>
+<!--引入topbar-->
+<div th:replace="/common/bar :: topbar"></div>
+<div class="container-fluid">
+    <div class="row">
+        <!--引入sidebar-->
+        <div th:replace="/common/bar :: sidebar(activeOption='article')"></div>
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+                <h1 class="h2"><i class="fa fa-sticky-note-o fa-lg" aria-hidden="true"></i>&nbsp;&nbsp;我的文章</h1>
+            </div>
+            <table th:if="${articles != null}"class="container-fluid table table-hover" style="margin-top: 50px;width: 1400px">
+                <tr style="font-size: 18px">
+                    <th style="text-align: center">文章标题</th>
+                    <th style="text-align: center">状态</th>
+                    <th style="text-align: center">创作时间</th>
+                    <th style="text-align: center">发布时间</th>
+                    <th style="text-align: center">点赞数</th>
+                    <th style="text-align: center">评论数</th>
+                    <th style="text-align: center">操作</th>
+                </tr>
+
+                <tr th:each="item : ${articles}" style="font-size: 17px;height: 50px">
+
+                    <td style="text-align: center;padding-top:20px">[[${item.article.title}]]</td>
+                    <td style="text-align: center;padding-top:20px">[[${item.article.status == 1}?'已发布':'未发布']]</td>
+                    <td style="text-align: center;padding-top:20px">[[${#dates.format(item.article.createtime, 'yyyy-MM-dd HH:mm:ss')}]]</td>
+                    <td style="text-align: center;padding-top:20px">[[${item.article.submittime == null}?'':${#dates.format(item.article.submittime, 'yyyy-MM-dd HH:mm:ss')}]]</td>
+                    <td style="text-align: center;padding-top:20px">[[${item.article.star}]]</td>
+                    <td style="text-align: center;padding-top:20px">[[${item.commentsCount}]]</td>
+                    <td style="text-align: center">
+                        <button type="button" class="button button-rounded" name="delete" style="width: 120px;height: 60%">删除</button>
+                        <button type="button" class="button button-rounded" name="delete" style="width: 120px;height: 60%">修改</button>
+                    </td>
+                </tr>
+            </table>
+            <nav class="blog-pagination" th:if="${curPage != null}">
+                <ul class="blog-pagination__items">
+                    <li th:each="page : ${#numbers.sequence(1, totalPage)}" class="blog-pagination__item  blog-pagination__item--active"
+                        th:class="${curPage == page}?'blog-pagination_'+'_item blog-pagination_'+'_item--active':'blog-pagination__item'"
+                    >
+                        <a href="#" th:href="@{'/home/article?'+'cur='+${page}+'&size=5'}">[[${page}]]</a>
+                    </li>
+                    <li class="blog-pagination__item">
+                        <a href="#" th:href="@{'/home/article?'+'cur='+${curPage+1}+'&size=5'}">Next Page</a>
+                    </li>
+                </ul>
+            </nav>
+
+
+        </main>
+    </div>
+</div>
+</body>
+
+</html>

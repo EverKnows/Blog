@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="FHQ.mapper.UserMapper" >
+    <sql id="updateUserInfo">
+        <set>
+            <if test="user.username != null">
+              username = #{user.username},
+            </if>
+            <if test="user.password != null">
+                password = #{user.password},
+            </if>
+            <if test="user.realname != null">
+                realname = #{user.realname},
+            </if>
+            <if test="user.intro != null">
+                intro = #{user.intro},
+            </if>
+            <if test="user.pic != null">
+                pic = #{user.pic},
+            </if>
+            <if test="user.email != null">
+                email = #{user.email},
+            </if>
+            <if test="user.tag != null">
+                tag = #{user.tag},
+            </if>
+            <if test="user.avatar != null">
+                avatar = #{user.avatar},
+            </if>
+
+        </set>
+    </sql>
+    <update id="updateUser">
+        update t_user
+        <include refid="updateUserInfo"/>
+        where id = #{user.id};
+    </update>
+
+    <select id="searchUserLikeName" resultMap="userMap">
+        select * from t_user
+        where
+          username like CONCAT('%', #{username}, '%')
+    </select>
+
+    <resultMap id="userMap" type="FHQ.po.User">
+        <id property="id" column="id"/>
+        <result property="username" column="username"/>
+        <result property="realname" column="realname"/>
+        <result property="intro" column="intro"/>
+        <result property="tag" column="tag"/>
+        <result property="email" column="email"/>
+        <result property="avatar" column="avatar"/>
+    </resultMap>
+
+    <insert id="followUserById" >
+        insert into t_follower(uid, fid) values(#{uid}, #{fid})
+    </insert>
+
+    <select id="findFollowRelation" resultType="java.lang.Integer">
+        select count(*) from t_follower where uid=#{uid} and fid=#{fid}
+    </select>
+
+    <select id="findUsersById" resultMap="userMap">
+        select id, username, realname, intro, email, avatar from t_user
+        <if test="uids.size != 0">
+            where id in
+            <foreach collection="uids" separator="," open="(" item="uid" close=")">
+                #{uid}
+            </foreach>
+        </if>
+    </select>
+
+    <resultMap id="commentWithUserMap" type="FHQ.vo.CommentWithWriter">
+        <id property="comment.id" column="id"/>
+        <result property="comment.aid" column="aid"/>
+        <result property="comment.uid" column="uid"/>
+        <result property="comment.context" column="context"/>
+        <result property="comment.createtime" column="createtime"/>
+        <association  property="user" javaType="FHQ.po.User" select="selectUserById" column="uid" >
+        </association>
+    </resultMap>
+
+    <select id="findCommentWithWriterByArticleId" resultMap="commentWithUserMap">
+          select id, aid, uid, context, createtime from t_comment  where  aid = #{aid}
+    </select>
+
+    <select id="getAllMyFollowers" resultMap="userMap">
+        select
+          id, username, realname, intro, email, avatar
+        from
+          t_user
+        where
+          id in
+          (
+            select fid from t_follower where uid = #{uid}
+          )
+    </select>
+</mapper>

@@ -4,11 +4,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Westa. Home</title>
-    <link rel="shortcut icon" href="img/favicon.png">
+    <link rel="shortcut icon"  th:href="@{/img/favicon.png}">
+    <!--<link  th:href="@{'https://fonts.googleapis.com/css'+'?family=Montserrat:300,400,500,700'}" rel="stylesheet">-->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,700" rel="stylesheet">
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/jquery.bxslider.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
+    <link  th:href="@{/cssold/bootstrap.min.css}" rel="stylesheet">
+    <link  th:href="@{/cssold/jquery.bxslider.css}" rel="stylesheet">
+    <link  th:href="@{/cssold/style.css}" rel="stylesheet">
 </head>
 <body>
     <nav th:fragment="top" class="navbar navbar-default">
@@ -21,24 +22,24 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">首页</a>
+            <a class="navbar-brand" th:href="@{/home}">首页</a>
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <form class="navbar-form navbar-left">
-                <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Search">
-                </div>
-                <button type="submit" class="btn btn-default">Submit</button>
-            </form>
+            <!--<form class="navbar-form navbar-left">-->
+                <!--<div class="form-group">-->
+                    <!--<input type="text" class="form-control" placeholder="Search">-->
+                <!--</div>-->
+                <!--<button type="submit" class="btn btn-default">Submit</button>-->
+            <!--</form>-->
             <ul class="nav navbar-nav navbar-right">
-                <li><img class="img-polaroid" src="img/img1.jpg" style="margin-top: 2px;height:45px"/></li>
+                <li><img class="img-polaroid" th:src="@{${session.user.avatar}}" style="margin-top: 2px;height:45px;width:45px"/></li>
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">用户名 <span class="caret"></span></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">[[${session.user.username}]]</a>
                     <ul class="dropdown-menu">
                         <li><a href="#">个人博客首页</a></li>
                         <li><a href="#">注销</a></li>
                         <li><a href="#">个人中心</a></li>
-                        <li><a href="#">Separated link</a></li>
+                        <!--<li><a href="#">Separated link</a></li>-->
                     </ul>
                 </li>
             </ul>
@@ -46,7 +47,7 @@
             </ul>
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
-</nav>
+    </nav>
     <svg th:fragment="svg" class="display-none">
     <symbol viewBox="0 0 512 512" id="icon-search">
         <path d="M448.3,424.7L335,311.3c20.8-26,33.3-59.1,33.3-95.1c0-84.1-68.1-152.2-152-152.2c-84,0-152,68.2-152,152.2
@@ -136,125 +137,29 @@
 </svg>
     <header th:fragment="header" class="header  container">
     <div class="row  header__logo">
-        <!--<div class="col-md-3">
-            <div class="social-icons">
-                <a href="#">
-                    <svg>
-                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-facebook"></use>
-                    </svg>
-                </a>
-                <a href="#">
-                    <svg>
-                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-twitter"></use>
-                    </svg>
-                </a>
-                <a href="#">
-                    <svg>
-                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-instagram"></use>
-                    </svg>
-                </a>
-            </div>
-        </div>-->
+
         <div class="col-md-offset-3 col-md-6  logo">
-            <h1><a class="logo__link" href="index.html">Westa.</a></h1>
+            <h1><a class="logo__link" href="index.html">[[${writer.username}]]</a></h1>
             <div class="logo__description"></div>
         </div>
-       <!-- <div class="col-md-3  header__right">
-            <div class="top-icons">
-                <div class="top-icons__search">
-                    <svg>
-                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-search"></use>
-                    </svg>
-                </div>
-            </div>
-        </div>-->
     </div>
     <nav class="nav">
         <ul class="nav__list">
-            <li class="nav__item  nav__item--active">
-                <a href="index.html">Home</a>
-                <ul class="nav__list-submenu">
-                    <li class="nav__item-submenu">
-                        <a href="index-fullwidth.html">Home Fullwidth</a>
-                    </li>
-                    <li class="nav__item-submenu">
-                        <a href="index-grid.html">Home Grid</a>
-                        <ul class="nav__list-submenu">
-                            <li class="nav__item-submenu">
-                                <a href="index-grid-fullwidth.html">Home Grid Fullwidth</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="nav__item-submenu">
-                        <a href="index-list.html">Home List</a>
-                        <ul class="nav__list-submenu">
-                            <li class="nav__item-submenu">
-                                <a href="index-list-fullwidth.html">Home List Fullwidth</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="nav__item-submenu">
-                        <a href="404.html">404 Page</a>
-                    </li>
-                    <li class="nav__item-submenu">
-                        <a href="single-post.html">Single Post</a>
-                        <ul class="nav__list-submenu">
-                            <li class="nav__item-submenu">
-                                <a href="single-post-fullwidth.html">Single Post Fullwidth</a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
+            <li th:class="${activeOption == 'index' ? 'nav_'+'_item  nav_'+'_item--active' : 'nav_'+'_item'}">
+                <a th:href="@{/index/}+${writer.username}">Home</a>
             </li>
-            <!--<li class="nav__item">
-                <a href="category.html">Lifestyle</a>
-                <ul class="nav__list-submenu">
-                    <li class="nav__item-submenu">
-                        <a href="category-fullwidth.html">Category Fullwidth</a>
-                    </li>
-                    <li class="nav__item-submenu">
-                        <a href="category-grid.html">Category Grid</a>
-                        <ul class="nav__list-submenu">
-                            <li class="nav__item-submenu">
-                                <a href="category-grid-fullwidth.html">Category Grid Fullwidth</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="nav__item-submenu">
-                        <a href="category-list.html">Category List</a>
-                        <ul class="nav__list-submenu">
-                            <li class="nav__item-submenu">
-                                <a href="category-list-fullwidth.html">Category List Fullwidth</a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-            </li>
-            <li class="nav__item">
-                <a href="category.html">Journey</a>
-            </li>-->
-            <!--<li class="nav__item">
-                <a href="category.html">Inspiration</a>
-            </li>-->
-            <li class="nav__item">
+
+            <li th:class="${activeOption == 'about' ? 'nav_'+'_item  nav_'+'_item--active' : 'nav_'+'_item'}">
                 <a href="about.html">About Me</a>
             </li>
-            <!--<li class="nav__item">
-                <a href="contact.html">Contact</a>
-            </li>-->
         </ul>
     </nav>
-    <div class="nav-toggle">
-        <svg class="nav-toggle__icon">
-            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-toggle"></use>
-        </svg>
-    </div>
 </header>
     <section th:fragment="section" class="container  top-slider">
         <div class="col-md-12">
         <div class="bxslider">
             <div>
-                <div class="featured-image" style="background-image:url(img/img1.jpg);">
+                <div class="featured-image" style="background-image:url(../../img/img0.jpg);">
                     <div class="featured-image__bg"></div>
                     <div class="featured-image__content">
                 <span class="featured-image__content-category">
@@ -271,7 +176,7 @@
                 </div>
             </div>
             <div>
-                <div class="featured-image" style="background-image:url(img/img2.jpg);">
+                <div class="featured-image" style="background-image:url(../../img/img2.jpg);">
                     <div class="featured-image__bg"></div>
                     <div class="featured-image__content">
                 <span class="featured-image__content-category">
@@ -288,7 +193,7 @@
                 </div>
             </div>
             <div>
-                <div class="featured-image" style="background-image:url(img/img3.jpg);">
+                <div class="featured-image" style="background-image:url(../../img/img3.jpg);">
                     <div class="featured-image__bg"></div>
                     <div class="featured-image__content">
                 <span class="featured-image__content-category">
@@ -307,7 +212,6 @@
         </div>
     </div>
     </section>
-
 
     <footer th:fragment="footer" class="page-footer">
         <div class="container  page-footer__top">

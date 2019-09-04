@@ -1,24 +1,28 @@
 package FHQ.po;
 
+import FHQ.Validation.LoginValidate;
+import FHQ.Validation.ModifyValidate;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.validation.constraints.Pattern;
+import java.io.Serializable;
 
 
-public class User {
+public class User implements Serializable {
+
     private Integer id;
 //
-    @NotBlank(message = "用户名不准为空")
-    @Pattern(regexp = "^[A-Za-z0-9]{3,16}$", message = "用户名格式错误")
+    @NotBlank(message = "用户名不准为空", groups = {LoginValidate.class})
+    @Pattern(regexp = "^[A-Za-z0-9]{3,16}$", message = "用户名格式错误", groups = {LoginValidate.class, ModifyValidate.class})
     private String username;
 
     /*
 
      */
-    @NotEmpty(message = "密码不准为空")
-    @Pattern(regexp = "^[a-zA-Z]{1,1}[a-zA-Z0-9.]{7,15}$", message = "密码格式错误")
+    @NotEmpty(message = "密码不准为空", groups = {LoginValidate.class})
+    @Pattern(regexp = "^[a-zA-Z]{1,1}[a-zA-Z0-9.]{7,15}$", message = "密码格式错误", groups = {LoginValidate.class, ModifyValidate.class})
     private String password;
 
 
@@ -28,8 +32,8 @@ public class User {
 
     private String pic;
 
-    @NotEmpty
-    @Email(message = "邮箱格式错误")
+    @NotEmpty(groups = {LoginValidate.class})
+    @Email(message = "邮箱格式错误", groups = {LoginValidate.class, ModifyValidate.class})
     private String email;
 
     private String tag;

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="FHQ.mapper.ArticleMapper">
+    
+    
+    
+    <!--<resultMap id="articleWithCommentMap2" type="FHQ.vo.ArticleWithComments">
+        <id property="article.id" column="id"/>
+        <result property="article.uid" column="uid"/>
+        <result property="article.title" column="title"/>
+        <result property="article.context" column="context"/>
+        <result property="article.star" column="star"/>
+        <result property="article.createtime" column="createtime"/>
+        <result property="article.submittime" column="submittime"/>
+        <result property="article.markdown" column="markdown"/>
+        <result property="article.status" column="status"/>
+        <result property="article.pic" column="pic"/>
+        <collection property="commentList" ofType="FHQ.po.Comment">
+            <id property="id" column="c_id"/>
+            <result property="aid" column="c_aid"/>
+            <result property="uid" column="c_uid"/>
+            <result property="context" column="c_context"/>
+            <result property="createtime" column="c_createtime"/>
+        </collection>
+    </resultMap>
+
+    <select id="selectArticleWithComments2" resultMap="articleWithCommentMap2" >
+        select
+          a.id, a.uid, a.title, a.context, a.star, a.createtime, a.submittime, a.markdown, a.status, a.pic,
+          c.id c_id, c.aid c_aid, c.uid c_uid, c.context c_context, c.createtime c_createtime
+        from
+          t_article as a
+
+        inner join
+          t_comment as c
+        on
+          a.id = c.aid
+        where
+          a.uid = #{uid}
+    </select>-->
+
+    <resultMap id="articleWithCommentMap" type="FHQ.vo.ArticleWithComments">
+        <id property="article.id" column="id"/>
+        <result property="article.uid" column="uid"/>
+        <result property="article.title" column="title"/>
+        <result property="article.context" column="context"/>
+        <result property="article.star" column="star"/>
+        <result property="article.createtime" column="createtime"/>
+        <result property="article.submittime" column="submittime"/>
+        <result property="article.markdown" column="markdown"/>
+        <result property="article.status" column="status"/>
+        <result property="article.pic" column="pic"/>
+        <collection property="commentList" ofType="FHQ.po.Comment" select="selectCommentsByArticleId" column="id">
+        </collection>
+    </resultMap>
+
+
+
+
+    <select id="selectArticleWithCommentsByUserId" resultMap="articleWithCommentMap">
+        select id, uid, title, context, star, createtime, submittime, markdown, status, pic from t_article where uid = #{uid}
+    </select>
+
+
+    <select id="selectArticleWithCommentsByUserIdAndArticleName" resultMap="articleWithCommentMap">
+        select id, uid, title, context, star, createtime, submittime, markdown, status, pic from t_article where uid = #{uid} and title=#{articleName}
+    </select>
+
+    <resultMap id="commentMap" type="FHQ.po.Comment">
+        <id property="id" column="id"/>
+        <result property="aid" column="aid"/>
+        <result property="uid" column="uid"/>
+        <result property="context" column="context"/>
+        <result property="createtime" column="createtime"/>
+    </resultMap>
+
+    <select id="selectCommentsByArticleId" resultMap="commentMap">
+        select * from t_comment where aid = #{aid}
+    </select>
+
+
+    <resultMap id="articleMap" type="FHQ.po.Article">
+        <id property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="uid" column="uid"/>
+        <result property="context" column="context"/>
+        <result property="markdown" column="markdown"/>
+        <result property="star" column="star"/>
+        <result property="status" column="status"/>
+        <result property="createtime" column="createtime"/>
+        <result property="submittime" column="submittime"/>
+        <result property="pic" column="pic"/>
+    </resultMap>
+
+    <select id="selectArticleByUserId" resultMap="articleMap">
+        select * from t_article where uid = #{uid}
+    </select>
+
+    <select id="findArticleByUserIdAndArticleName" resultMap="articleMap">
+        select * from t_article where uid=#{uid} and title=#{articleName}
+    </select>
+
+    <select id="findCommentsByArticleId" resultMap="commentMap">
+        select * from t_comment where aid = #{aid}
+    </select>
+
+
+
+
+</mapper>

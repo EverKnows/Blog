@@ -3,12 +3,13 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Home</title>
-    <link rel="shortcut icon" href="img/favicon.png" th:href="@{/img/favicon.png}">
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,700" th:href="@{https://fonts.googleapis.com/css?family=Montserrat:300,400,500,700}" rel="stylesheet">
-    <link href="css/bootstrap.min.css" th:href="@{/cssold/bootstrap.min.css}" rel="stylesheet">
-    <link href="css/jquery.bxslider.css" th:href="@{/css/jquery.bxslider.css}" rel="stylesheet">
-    <link href="css/style.css" th:href="@{/css/style.css}" rel="stylesheet">
+    <title>[[${writer.username}]]</title>
+    <link rel="shortcut icon"  th:href="@{/img/favicon.png}">
+    <!--<link  th:href="@{'https://fonts.googleapis.com/css'+'?family=Montserrat:300,400,500,700'}" rel="stylesheet">-->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,700" rel="stylesheet">
+    <link  th:href="@{/cssold/bootstrap.min.css}" rel="stylesheet">
+    <link  th:href="@{/cssold/jquery.bxslider.css}" rel="stylesheet">
+    <link  th:href="@{/cssold/style.css}" rel="stylesheet">
   </head>
   <body>
    <nav th:replace="common/blog :: top"></nav>
@@ -99,277 +100,73 @@
        <polygon points="352,115.4 331.3,96 160,256 331.3,416 352,396.7 201.5,256 "/>
      </symbol>
    </svg>
-   <header th:replace="common/blog :: header"></header>
-   <section th:replace="common/blog :: section"></section>
+   <header th:replace="common/blog :: header(activeOption='index')"></header>
+   <!--<section th:replace="common/blog :: section"></section>-->
    <main>
       <div class="container">
         <div class="col-md-9">
-          <div class="blog-post">
+          <!-- 一篇博文 -->
+          <div class="blog-post" th:each="blog : ${articles}">
             <div class="blog-post-wrapper">
               <div class="blog-post__info  blog-post__info--top">
-                <span><a href="#">Inspiration</a></span>
+                <!--<span><a href="#">Inspiration</a></span>-->
               </div>
               <div class="blog-post__title">
-                <h2><a href="single-post.html">Why Glass Had Been So Popular Till Now?</a></h2>
+                <h2><a href="single-post.html">[[${blog.article.title}]]</a></h2>
               </div>
               <div class="blog-post__info">
-                <span>By <a href="#">Westa</a></span>
-                <span>November 16, 2018</span>
-                <span><a href="#">1 Comments</a></span>
+                <span>By <a href="#">[[${writer.username}]]</a></span>
+                <span>[[${#dates.format(blog.article.createtime, 'yyyy-MM-dd')}]]</span>
+                <span><a href="#">[[${blog.commentsCount}]] Comments</a></span>
               </div>
             </div>
-            <div class="blog-post__image">
-              <a href="single-post.html"><img src="img/img0.jpg" alt="Why Glass Had Been So Popular Till Now?"></a>
-            </div>
+            <!--<div class="blog-post__image">-->
+              <!--<a href="single-post.html"><img th:src="@{/img/img0.jpg}" alt="Why Glass Had Been So Popular Till Now?"></a>-->
+            <!--</div>-->
             <div class="blog-post-wrapper">
               <div class="blog-post__content">
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse lobortis commodo ullamcorper. Duis pretium convallis odio non varius. Nulla quis lorem metus. Fusce velit magna, ultricies quis elit sit amet, lacinia porttitor magna. Nulla scelerisque, ex quis imperdiet finibus, elit massa dictum arcu, et fermentum orci felis in ipsum. Suspendisse rutrum nec ipsum id feugiat. Nunc eu lacinia turpis. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Etiam dapibus cursus justo.</p>
+                <p name="blogContent" style="overflow: hidden;text-overflow: ellipsis; display: -webkit-box;-webkit-line-clamp: 3;-webkit-box-orient: vertical;width: 100%"></p>
               </div>
               <div class="blog-post__footer">
-                <a class="blog-post__footer-link" href="single-post.html">Read more</a>
-                <div class="blog-post__footer-social">
-                  <span>Share:</span>
-                  <div class="blog-post__footer-social-icons">
-                    <a href="#">
-                      <svg>
-                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-facebook"></use>
-                      </svg>
-                    </a>
-                    <a href="#">
-                      <svg>
-                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-twitter"></use>
-                      </svg>
-                    </a>
-                    <a href="#">
-                      <svg>
-                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-google"></use>
-                      </svg>
-                    </a>
-                    <a href="#">
-                      <svg>
-                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-pinterest"></use>
-                      </svg>
-                    </a>
-                  </div>
-                </div>
+                <a class="blog-post__footer-link" th:href="@{'/index/' + ${writer.username} + '/' + ${blog.article.title}}">Read more</a>
               </div>
             </div>
           </div>
-          <div class="blog-post">
-            <div class="blog-post-wrapper">
-              <div class="blog-post__info  blog-post__info--top">
-                <span><a href="#">Lifestyle</a></span>
-              </div>
-              <div class="blog-post__title">
-                <h2><a href="single-post.html">Fall In Love With Cat</a></h2>
-              </div>
-              <div class="blog-post__info">
-                <span>By <a href="#">Westa</a></span>
-                <span>November 14, 2018</span>
-                <span><a href="#">3 Comments</a></span>
-              </div>
-            </div>
-            <div class="blog-post__image">
-              <a href="single-post.html"><img src="img/img1.jpg" alt="Fall In Love With Cat"></a>
-            </div>
-            <div class="blog-post-wrapper">
-              <div class="blog-post__content">
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse lobortis commodo ullamcorper. Duis pretium convallis odio non varius. Nulla quis lorem metus. Fusce velit magna, ultricies quis elit sit amet, lacinia porttitor magna. Nulla scelerisque, ex quis imperdiet finibus, elit massa dictum arcu, et fermentum orci felis in ipsum. Suspendisse rutrum nec ipsum id feugiat. Nunc eu lacinia turpis. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Etiam dapibus cursus justo.</p>
-              </div>
-              <div class="blog-post__footer">
-                <a class="blog-post__footer-link" href="single-post.html">Read more</a>
-                <div class="blog-post__footer-social">
-                  <span>Share:</span>
-                  <div class="blog-post__footer-social-icons">
-                    <a href="#">
-                      <svg>
-                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-facebook"></use>
-                      </svg>
-                    </a>
-                    <a href="#">
-                      <svg>
-                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-twitter"></use>
-                      </svg>
-                    </a>
-                    <a href="#">
-                      <svg>
-                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-google"></use>
-                      </svg>
-                    </a>
-                    <a href="#">
-                      <svg>
-                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-pinterest"></use>
-                      </svg>
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="blog-post">
-            <div class="blog-post-wrapper">
-              <div class="blog-post__info  blog-post__info--top">
-                <span><a href="#">Journey</a></span>
-              </div>
-              <div class="blog-post__title">
-                <h2><a href="single-post.html">All You Need To Know About Forest</a></h2>
-              </div>
-              <div class="blog-post__info">
-                <span>By <a href="#">Westa</a></span>
-                <span>November 10, 2018</span>
-                <span><a href="#">0 Comments</a></span>
-              </div>
-            </div>
-            <div class="blog-post__image">
-              <a href="single-post.html"><img src="img/img2.jpg" alt="All You Need To Know About Forest"></a>
-            </div>
-            <div class="blog-post-wrapper">
-              <div class="blog-post__content">
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse lobortis commodo ullamcorper. Duis pretium convallis odio non varius. Nulla quis lorem metus. Fusce velit magna, ultricies quis elit sit amet, lacinia porttitor magna. Nulla scelerisque, ex quis imperdiet finibus, elit massa dictum arcu, et fermentum orci felis in ipsum. Suspendisse rutrum nec ipsum id feugiat. Nunc eu lacinia turpis. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Etiam dapibus cursus justo.</p>
-              </div>
-              <div class="blog-post__footer">
-                <a class="blog-post__footer-link" href="single-post.html">Read more</a>
-                <div class="blog-post__footer-social">
-                  <span>Share:</span>
-                  <div class="blog-post__footer-social-icons">
-                    <a href="#">
-                      <svg>
-                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-facebook"></use>
-                      </svg>
-                    </a>
-                    <a href="#">
-                      <svg>
-                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-twitter"></use>
-                      </svg>
-                    </a>
-                    <a href="#">
-                      <svg>
-                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-google"></use>
-                      </svg>
-                    </a>
-                    <a href="#">
-                      <svg>
-                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-pinterest"></use>
-                      </svg>
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="blog-post">
-            <div class="blog-post-wrapper">
-              <div class="blog-post__info  blog-post__info--top">
-                <span><a href="#">Lifestyle</a></span>
-              </div>
-              <div class="blog-post__title">
-                <h2><a href="single-post.html">Skills That You Can Learn From Book</a></h2>
-              </div>
-              <div class="blog-post__info">
-                <span>By <a href="#">Westa</a></span>
-                <span>November 7, 2018</span>
-                <span><a href="#">2 Comments</a></span>
-              </div>
-            </div>
-            <div class="blog-post__image">
-              <a href="single-post.html"><img src="img/img3.jpg" alt="Skills That You Can Learn From Book"></a>
-            </div>
-            <div class="blog-post-wrapper">
-              <div class="blog-post__content">
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse lobortis commodo ullamcorper. Duis pretium convallis odio non varius. Nulla quis lorem metus. Fusce velit magna, ultricies quis elit sit amet, lacinia porttitor magna. Nulla scelerisque, ex quis imperdiet finibus, elit massa dictum arcu, et fermentum orci felis in ipsum. Suspendisse rutrum nec ipsum id feugiat. Nunc eu lacinia turpis. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Etiam dapibus cursus justo.</p>
-              </div>
-              <div class="blog-post__footer">
-                <a class="blog-post__footer-link" href="single-post.html">Read more</a>
-                <div class="blog-post__footer-social">
-                  <span>Share:</span>
-                  <div class="blog-post__footer-social-icons">
-                    <a href="#">
-                      <svg>
-                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-facebook"></use>
-                      </svg>
-                    </a>
-                    <a href="#">
-                      <svg>
-                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-twitter"></use>
-                      </svg>
-                    </a>
-                    <a href="#">
-                      <svg>
-                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-google"></use>
-                      </svg>
-                    </a>
-                    <a href="#">
-                      <svg>
-                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-pinterest"></use>
-                      </svg>
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <nav class="blog-pagination">
+
+          <!-- 分页框 -->
+          <nav class="blog-pagination" th:if="${totalPage != null && totalPage >= 1}">
             <ul class="blog-pagination__items">
-              <li class="blog-pagination__item  blog-pagination__item--active">
-                <a>1</a>
+              <li th:each="page : ${#numbers.sequence(1, totalPage)}"
+                  th:class="${curPage == page}?'blog-pagination_'+'_item blog-pagination_'+'_item--active':'blog-pagination__item'"
+              >
+                <a  th:href="@{'/index/'+${writer.username}+'?'+'cur='+${page}+'&size=5'}">[[${page}]]</a>
               </li>
               <li class="blog-pagination__item">
-                <a href="#">2</a>
-              </li>
-              <li class="blog-pagination__item">
-                <a href="#">Next Page</a>
+                <a  th:href="@{'/index/'+${writer.username}+'?'+'cur='+${curPage+1}+'&size=5'}">Next Page</a>
               </li>
             </ul>
           </nav>
         </div>
+
         <div class="col-md-3  sidebar  sidebar--right">
           <div class="sidebar-widget">
             <h3>About Me</h3>
             <div class="sidebar-widget__about-me">
               <div class="sidebar-widget__about-me-image">
-                <img src="img/about-me.jpg" alt="About Me">
+                <img th:src="@{/img/about-me.jpg}" alt="About Me">
               </div>
-              <p>Duis pretium convallis odio non varius. Nulla quis lorem metus.</p>
+              <p name="aboutMe" style="overflow: hidden;text-overflow: ellipsis; display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;width: 100%"></p>
               <span class="sidebar-widget__about-me-link">
                 <a href="about.html">Read More</a>
               </span>
             </div>
           </div>
           <div class="sidebar-widget">
-            <h3><button type="button" class="btn btn-block"><b>Follow me</b></button></h3>
-            <!--<div class="sidebar-widget__follow-me">
-              <div class="sidebar-widget__follow-me-icons">
-                <a href="#">
-                  <svg>
-                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-facebook"></use>
-                  </svg>
-                </a>
-                <a href="#">
-                  <svg>
-                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-twitter"></use>
-                  </svg>
-                </a>
-                <a href="#">
-                  <svg>
-                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-google"></use>
-                  </svg>
-                </a>
-                <a href="#">
-                  <svg>
-                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-pinterest"></use>
-                  </svg>
-                </a>
-                <a href="#">
-                  <svg>
-                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-instagram"></use>
-                  </svg>
-                </a>
-              </div>
-            </div>-->
+            <h3><button type="button" name="follow" class="btn btn-block"><b>Follow me</b></button></h3>
           </div>
           <div class="sidebar-widget">
             <div class="sidebar-widget__banner">
-              <a href="#"><img src="img/banner.jpg" alt="Banner"></a>
+              <a href="#"><img th:src="@{/img/banner.jpg}" alt="Banner"></a>
             </div>
           </div>
           <div class="sidebar-widget">
@@ -377,7 +174,7 @@
             <div class="sidebar-widget__popular">
               <div class="sidebar-widget__popular-item">
                 <div class="sidebar-widget__popular-item-image">
-                  <a href="single-post.html"><img src="img/sidebar1.jpg" alt="7 Quick Tips For Coffee"></a>
+                  <a href="single-post.html"><img  th:src="@{/img/sidebar1.jpg}" alt="7 Quick Tips For Coffee"></a>
                 </div>
                 <div class="sidebar-widget__popular-item-info">
                   <div class="sidebar-widget__popular-item-date">
@@ -390,7 +187,7 @@
               </div>
               <div class="sidebar-widget__popular-item">
                 <div class="sidebar-widget__popular-item-image">
-                  <a href="single-post.html"><img src="img/sidebar2.jpg" alt="The Shocking Revelation of Books"></a>
+                  <a href="single-post.html"><img th:src="@{/img/sidebar2.jpg}" alt="The Shocking Revelation of Books"></a>
                 </div>
                 <div class="sidebar-widget__popular-item-info">
                   <div class="sidebar-widget__popular-item-date">
@@ -403,7 +200,7 @@
               </div>
               <div class="sidebar-widget__popular-item">
                 <div class="sidebar-widget__popular-item-image">
-                  <a href="single-post.html"><img src="img/sidebar3.jpg" alt="How Pen Can Ease Your Pain"></a>
+                  <a href="single-post.html"><img th:src="@{/img/sidebar3.jpg}" alt="How Pen Can Ease Your Pain"></a>
                 </div>
                 <div class="sidebar-widget__popular-item-info">
                   <div class="sidebar-widget__popular-item-date">
@@ -416,7 +213,7 @@
               </div>
               <div class="sidebar-widget__popular-item">
                 <div class="sidebar-widget__popular-item-image">
-                  <a href="single-post.html"><img src="img/sidebar4.jpg" alt="Why Is Guitar So Famous?"></a>
+                  <a href="single-post.html"><img th:src="@{/img/sidebar4.jpg}" alt="Why Is Guitar So Famous?"></a>
                 </div>
                 <div class="sidebar-widget__popular-item-info">
                   <div class="sidebar-widget__popular-item-date">
@@ -429,7 +226,7 @@
               </div>
               <div class="sidebar-widget__popular-item">
                 <div class="sidebar-widget__popular-item-image">
-                  <a href="single-post.html"><img src="img/sidebar5.jpg" alt="How To Get People To Like Cafe"></a>
+                  <a href="single-post.html"><img th:src="@{/img/sidebar5.jpg}"  alt="How To Get People To Like Cafe"></a>
                 </div>
                 <div class="sidebar-widget__popular-item-info">
                   <div class="sidebar-widget__popular-item-date">
@@ -453,77 +250,12 @@
             </div>
           </div>
           <div class="sidebar-widget">
-            <h3>Instagram</h3>
+            <h3>LIFE</h3>
             <div class="sidebar-widget__instagram">
-              <a href="#"><img src="img/instagram1.jpg" alt="Instagram"></a>
-              <a href="#"><img src="img/instagram2.jpg" alt="Instagram"></a>
-              <a href="#"><img src="img/instagram3.jpg" alt="Instagram"></a>
-              <a href="#"><img src="img/instagram4.jpg" alt="Instagram"></a>
-            </div>
-          </div>
-          <div class="sidebar-widget">
-            <h3>Subscribe</h3>
-            <div class="sidebar-widget__subscribe">
-              <p>Follow my latest news</p>
-              <form action="index.html">
-                <input type="text" placeholder="Your email">
-                <input class="sidebar-widget__subscribe-submit" type="submit" value="Submit">
-              </form>
-            </div>
-          </div>
-          <div class="sidebar-widget">
-            <div class="sidebar-slider">
-              <div>
-                <div class="featured-image" style="background-image:url(img/img1.jpg);">
-                  <div class="featured-image__bg"></div>
-                  <div class="featured-image__content">
-                    <span class="featured-image__content-category">
-                      <a href="#">Lifestyle</a>
-                    </span>
-                    <span class="featured-image__content-title">
-                      <a href="single-post.html">Fall In Love With Cat</a>
-                    </span>
-                    <span class="featured-image__content-link">
-                      <a href="single-post.html">Read More</a>
-                    </span>
-                  </div>
-                  <a class="featured-image__overlay-link" href="single-post.html"></a>
-                </div>
-              </div>
-              <div>
-                <div class="featured-image" style="background-image:url(img/img0.jpg);">
-                  <div class="featured-image__bg"></div>
-                  <div class="featured-image__content">
-                    <span class="featured-image__content-category">
-                      <a href="#">Inspiration</a>
-                    </span>
-                    <span class="featured-image__content-title">
-                      <a href="single-post.html">Why Glass Had Been So Popular Till Now?</a>
-                    </span>
-                    <span class="featured-image__content-link">
-                      <a href="single-post.html">Read More</a>
-                    </span>
-                  </div>
-                  <a class="featured-image__overlay-link" href="single-post.html"></a>
-                </div>
-              </div>
-              <div>
-                <div class="featured-image" style="background-image:url(img/img3.jpg);">
-                  <div class="featured-image__bg"></div>
-                  <div class="featured-image__content">
-                    <span class="featured-image__content-category">
-                      <a href="#">Lifestyle</a>
-                    </span>
-                    <span class="featured-image__content-title">
-                      <a href="single-post.html">Skills That You Can Learn From Book</a>
-                    </span>
-                    <span class="featured-image__content-link">
-                      <a href="single-post.html">Read More</a>
-                    </span>
-                  </div>
-                  <a class="featured-image__overlay-link" href="single-post.html"></a>
-                </div>
-              </div>
+              <a href="#"><img  th:src="@{/img/instagram1.jpg}" alt="Instagram"></a>
+              <a href="#"><img  th:src="@{/img/instagram2.jpg}" alt="Instagram"></a>
+              <a href="#"><img  th:src="@{/img/instagram3.jpg}" alt="Instagram"></a>
+              <a href="#"><img  th:src="@{/img/instagram4.jpg}" alt="Instagram"></a>
             </div>
           </div>
         </div>
@@ -532,11 +264,43 @@
    <footer th:replace="common/blog :: footer"></footer>
    <div th:replace="common/blog :: search"></div>
    <div class="content-overlay"></div>
-   <script src="js/jquery-3.1.1.min.js" th:src="@{/js/jquery-3.1.1.min.js}"></script>
-   <script src="js/jquery.slicknav.min.js" th:src="@{/js/jquery.slicknav.min.js}"></script>
-   <script src="js/jquery.bxslider.min.js"th:src="@{/js/jquery.bxslider.min.js}"></script>
-   <script src="js/script.js" th:href="@{/js/script.js}"></script>
-   <script src="js/bootstrap.min.js" th:href="@{/js/bootstrap.min.js}"></script>
+   <script  th:src="@{/js/jquery-3.1.1.min.js}"></script>
+   <script  th:src="@{/js/jquery.slicknav.min.js}"></script>
+   <script  th:src="@{/js/jquery.bxslider.min.js}"></script>
+   <!--<script  th:href="@{/js/bootstrap.min.js}"></script>-->
+   <script  th:href="@{/js/script.js}"></script>
 
+   <script  th:inline="javascript">
+      var blogArr = [[${articles}]];
+      var contentArr = $("p[name='blogContent']");
+      var aboutMe = $("p[name='aboutMe']");
+      var writer = [[${writer}]];
+      for(var i = 0;i < contentArr.length;i++) {
+        contentArr[i].innerHTML = (blogArr[i].article.context);
+      }
+      var str = [[${session.user.avatar}]];
+      aboutMe[0].innerHTML = writer.intro;
+
+      $("button[name='follow']").bind('click', followWriter);
+      function followWriter(){
+        var userID = [[${writer.id}]];
+
+        // alert(userID);
+        $.ajax({
+          url: '/follow/'+userID,
+          type: 'POST',
+          success: function(data) {
+            if (data.success != null) {
+              alert(data.success);
+            } else {
+              alert(data.error);
+            }
+          },
+          error: function(data) {
+            alert("遇到未知错误！");
+          }
+        });
+      }
+   </script>
   </body>
 </html>

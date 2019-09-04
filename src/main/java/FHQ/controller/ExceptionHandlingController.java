@@ -15,13 +15,15 @@ import javax.servlet.http.HttpServletRequest;
 public class ExceptionHandlingController {
     @ExceptionHandler(NoHandlerFoundException.class)
     public String handleException(Exception ex, HttpServletRequest request, Model model) {
-        model.addAttribute("Message", ex.getMessage());
-        model.addAttribute("Url", request.getRequestURL());
+        ex = null;
+//        model.addAttribute("Message", ex.getMessage());
+//        model.addAttribute("Url", request.getRequestURL());
         return "error/404";
     }
 
     @ExceptionHandler(Exception.class)
     public String handException2(Exception ex, HttpServletRequest request, Model model) {
-        return "error/404";
+        System.out.println(ex.getMessage());
+        return null;
     }
 }

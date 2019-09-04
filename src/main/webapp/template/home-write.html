@@ -7,38 +7,32 @@
 		<meta name="description" content="">
 		<meta name="author" content="">
 
-		<title>Dashboard Template for Bootstrap</title>
+		<title>Home</title>
+		<link href="css/buttons.css" th:href="@{css/buttons.css}" rel="stylesheet"/>
+		<link href="css/jquery.bxslider.css" th:href="@{/css/jquery.bxslider.css}" rel="stylesheet">
+		<link href="/css/style.css" th:href="@{/css/style.css}" rel="stylesheet">
 		<!-- Bootstrap core CSS -->
 		<link href="asserts/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
-
 		<!-- Custom styles for this template -->
 		<link href="asserts/css/dashboard.css" th:href="@{/css/dashboard.css}" rel="stylesheet">
-		<style type="text/css">
-			/* Chart.js */
-			
-			@-webkit-keyframes chartjs-render-animation {
-				from {
-					opacity: 0.99
-				}
-				to {
-					opacity: 1
-				}
-			}
-			
-			@keyframes chartjs-render-animation {
-				from {
-					opacity: 0.99
-				}
-				to {
-					opacity: 1
-				}
-			}
-			
-			.chartjs-render-monitor {
-				-webkit-animation: chartjs-render-animation 0.001s;
-				animation: chartjs-render-animation 0.001s;
-			}
-		</style>
+		<link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css" th:href="@{/css/font-awesome.min.css}">
+		<link rel="stylesheet" th:href="@{/css/buttons.css}" href="/css/buttons.css">
+		<script src="/js/jquery-3.1.1.min.js" th:src="@{/js/jquery-3.1.1.min.js}"></script>
+		<script src="/js/jquery.slicknav.min.js" th:src="@{/js/jquery.slicknav.min.js}"></script>
+		<script src="/js/jquery.bxslider.min.js" th:src="@{/js/jquery.bxslider.min.js}"></script>
+		<script src="/js/script.js" th:href="@{/js/script.js}"></script>
+		<script src="/js/bootstrap.min.js" th:href="@{/js/bootstrap.min.js}"></script>
+		<script src="/js/jquery.slicknav.min.js" th:src="@{/js/jquery.slicknav.min.js}"></script>
+
+		<!--<link href="css/style.css" th:href="@{/css/style.css}" rel="stylesheet">-->
+		<link href="../css/editormd.min.css" th:href="@{/css/editormd.min.css}" rel="stylesheet"/>
+		<link rel="shortcut icon" href="img/favicon.png" th:href="@{/img/favicon.png}">
+		<link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,700" rel="stylesheet">
+		<!--<link href="css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet">-->
+
+
+
+
 	</head>
 
 	<body>
@@ -47,73 +41,139 @@
 		<div class="container-fluid">
 			<div class="row">
 				<!--引入sidebar-->
-				<div th:replace="/common/bar :: sidebar(activeOption='info')"></div>
+				<div th:replace="/common/bar :: sidebar(activeOption='write')"></div>
 				<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
-					<div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;">
-						<div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
-							<div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div>
-						</div>
-						<div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
-							<div style="position:absolute;width:200%;height:200%;left:0; top:0"></div>
-						</div>
-					</div>
+					<!-- 登录用户的id -->
+
 					<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
-						<h1 class="h2">Dashboard</h1>
-						<div class="btn-toolbar mb-2 mb-md-0">
+						<div class="input-group" style="height: 50px;width: 40%">
+							<span class="input-group-addon" id="basic-addon2" style="font-size: 25px">文章标题</span>&nbsp;&nbsp;
+							<!-- 文章标题 -->
+							<input type="text" name="title" th:value="*{article}?*{article.title}:''" class="form-control" style="height: 40px;font-size: 25px"  aria-describedby="basic-addon2">
+						</div>
+						<div class="btn-toolbar mb-2 mb-md-0" style="height: 50px">
 							<div class="btn-group mr-2">
-								<button class="btn btn-sm btn-outline-secondary">Share</button>
-								<button class="btn btn-sm btn-outline-secondary">Export</button>
+								<button name="save"  type="button" class=" btn btn-sm btn-outline-secondary" style="width: 80px;height: 40px">保存</button>
+								<button name="release" type="button" class=" btn btn-sm btn-outline-secondary" style="width: 80px;height: 40px">发布</button>
 							</div>
-							<button class="btn btn-sm btn-outline-secondary dropdown-toggle">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-                This week
-              </button>
+							<input type="file" class="btn btn-sm btn-outline-secondary" style="width: 100px;height: 40px" value="上传封面">
+
+
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12">
+							<div class="editormd"  id="test-editormd">
+								<textarea class="editormd-markdown-textarea" name="test-editormd-markdown-doc" th:text="*{article}?*{article.markdown}:''"></textarea>
+								<!-- 第二个隐藏文本域，用来构造生成的HTML代码，方便表单POST提交，这里的name可以任意取，后台接受时以这个name键为准 -->
+								<textarea class="editormd-html-textarea" name="html" ></textarea>
+							</div>
 						</div>
 					</div>
 
-					<canvas class="my-4 chartjs-render-monitor" id="myChart" width="1076" height="454" style="display: block; width: 1076px; height: 454px;"></canvas>
-
-					
+					<input type="hidden" name="aid" th:if="${article != null}" th:value="${article.id}"/>
+					<input type="hidden" name="uid" th:value="${session.user.id}">
 				</main>
 			</div>
 		</div>
+		<script src="/js/jquery-3.1.1.min.js" th:src="@{/js/jquery-3.1.1.min.js}"></script>
+		<script src="js/jquery.slicknav.min.js" th:src="@{/js/jquery.slicknav.min.js}"></script>
+		<script src="js/jquery.bxslider.min.js"th:src="@{/js/jquery.bxslider.min.js}"></script>
+		<script src="js/script.js" th:href="@{/js/script.js}"></script>
 
-		<!-- Bootstrap core JavaScript
-    ================================================== -->
-		<div th:replace="/common/bar :: publicjs"></div>
+		<script src="/js/editormd.min.js" th:src="@{/js/editormd.min.js}"></script>
+		<script src="/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
+		<script src="/editormd/lib/marked.min.js" th:src="@{/editormd/lib/marked.min.js}"></script>
+		<script src="/editormd/lib/prettify.min.js" th:src="@{/editormd/lib/prettify.min.js}"></script>
+		<script src="/plugins/image-dialog/image-dialog.js" th:src="@{/plugins/image-dialog/image-dialog.js}"></script>
 
-		<!-- Graphs -->
-		<script type="text/javascript" src="asserts/js/Chart.min.js" th:src="@{/js/Chart.min.js}"></script>
-		<script>
-			var ctx = document.getElementById("myChart");
-			var myChart = new Chart(ctx, {
-				type: 'line',
-				data: {
-					labels: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-					datasets: [{
-						data: [15339, 21345, 18483, 24003, 23489, 24092, 12034],
-						lineTension: 0,
-						backgroundColor: 'transparent',
-						borderColor: '#007bff',
-						borderWidth: 4,
-						pointBackgroundColor: '#007bff'
-					}]
-				},
-				options: {
-					scales: {
-						yAxes: [{
-							ticks: {
-								beginAtZero: false
-							}
-						}]
-					},
-					legend: {
-						display: false,
-					}
-				}
+
+		<script type="text/javascript">
+			$(function() {
+				editormd("test-editormd", {
+					width   : 1500,
+					height  : 900,
+					syncScrolling : "single",
+					//lib目录
+					path    : "/editormd/lib/",
+					//这个配置在simple.html中并没有，但是为了能够提交表单，使用这个配置可以让构造出来的HTML代码直接在第二个隐藏的textarea域中，方便post提交表单。
+					saveHTMLToTextarea : true,
+					previewTheme : "light",
+					imageUpload : true,
+					emoji: true,
+					tex: true,
+					searchReplace: true,
+					imageFormats : ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
+					imageUploadURL : "/articleupload"
+
+				});
 			});
-		</script>
+			//editor.md期望得到一个json格式的上传后的返回值，格式是这样的：
+			/*
+            {
+                success : 0 | 1,           // 0 表示上传失败，1 表示上传成功
+                message : "提示的信息，上传成功或上传失败及错误信息等。",
+                url     : "图片地址"        // 上传成功时才返回
+            }
+            */
 
+			$("button[name='save']").bind("click", saveArticle);
+			function saveArticle() {
+				var uid = $("input[name='uid']").val();
+				var aid = $("input[name='aid']").val();
+				var title = $("input[name='title']").val();
+				var md = $("textarea[name='test-editormd-markdown-doc']").val();
+				var context = $("textarea[name='html']").val();
+				var data = {aid: aid, uid: uid, title: title, context: context, status:0, createtime: new Date(), submittime: new Date(), markdown: md, star: 0};
+				//alert(JSON.stringify(data));
+				$.ajax({
+					data: JSON.stringify(data),
+					type: "PUT",
+					url: "/home/write",
+					contentType : "application/json;charset=utf-8",
+					dataType : "json",
+					success: function(data) {
+						if (data.success != null) {
+							alert(data.success);
+						}
+						if(data.error != null) {
+							alert(data.error);
+						}
+					},
+					error: function(data) {
+						alert("遇到未知错误!");
+					}
+				});
+			};
+			$("button[name='release']").bind("click", releaseArticle);
+			function releaseArticle() {
+				var uid = $("input[name='uid']").val();
+				var aid = $("input[name='aid']").val();
+				var title = $("input[name='title']").val();
+				var md = $("textarea[name='test-editormd-markdown-doc']").val();
+				var context = $("textarea[name='html']").val();
+				var data = {aid: aid, uid: uid, title: title, context: context, status:1, createtime: new Date(),submittime: new Date(), markdown: md,  star: 0};
+				//alert(JSON.stringify(data));
+				$.ajax({
+					data: JSON.stringify(data),
+					type: "PUT",
+					url: "/home/write",
+					contentType : "application/json;charset=utf-8",
+					dataType : "json",
+					success: function(data) {
+						if (data.success != null) {
+							alert(data.success);
+						}
+						if(data.error != null) {
+							alert(data.error);
+						}
+					},
+					error: function(data) {
+						alert("遇到未知错误!");
+					}
+				});
+			};
+		</script>
 	</body>
 
 </html>
